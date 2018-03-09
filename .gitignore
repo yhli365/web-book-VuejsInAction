@@ -57,3 +57,11 @@ typings/
 # dotenv environment variables file
 .env
 
+# Eclipse project files
+.classpath
+.project
+.settings/
+target/
+.cache-main
+.cache-tests
+

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue内置指令示例: v-if,v-else-if,v-else</title>
+<style>
+[v-cloak] {
+	display: none;
+}
+</style>
+</head>
+<body>
+	<div id="app">
+		<div>status = {{ status }}</div>
+		<p v-if="status === 1">当status为1时显示该行</p>
+		<p v-else-if="status === 2">当status为2时显示该行</p>
+		<p v-else>否则显示该行</p>
+		<button @click="changeStatusValue">改变值(status)</button>
+	</div>
+	<hr />
+	<div id="app2">
+		<div style="color: red">可以在Vue.js内置的template元素上使用条件指令，最终渲染的结果不会包含该元素。</div>
+		<div>status = {{ status }}</div>
+		<template v-if="status === 1">
+		<p>这是一段文本</p>
+		<p>这是一段文本</p>
+		<p>这是一段文本</p>
+		</template>
+		<button @click="changeStatusValue">改变值(status)</button>
+	</div>
+	<hr />
+	<div id="app3">
+		<div style="color: red">Vue在渲染元素时，出于效率的考虑，会尽可能地复用已有的元素而非重新渲染。</div>
+		<div>type = {{ type }}</div>
+		<template v-if="type === 'name'"> <label>用户名：</label> <input
+			placeholder="输入用户名"> </template>
+		<template v-else> <label>邮箱：</label> <input
+			placeholder="输入邮箱"> </template>
+		<button @click="handleToggleClick">切换输入类型(status)</button>
+	</div>
+	<hr />
+	<div id="app4">
+		<div style="color: red">可以使用Vue.js提供的key属性，让你自己决定是否要复用元素，key的值必须是唯一的。</div>
+		<div>这里，input不复用，切换类型时输入的内容页会被删除，但label元素仍复用。</div>
+		<div>type = {{ type }}</div>
+		<template v-if="type === 'name'"> <label>用户名：</label> <input
+			placeholder="输入用户名" key="name-input"> </template>
+		<template v-else> <label>邮箱：</label> <input
+			placeholder="输入邮箱" key="mail-input"> </template>
+		<button @click="handleToggleClick">切换输入类型(status)</button>
+	</div>
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		var app = new Vue({
+			el : '#app',
+			data : {
+				status : 1
+			},
+			methods : {
+				changeStatusValue : function() {
+					this.status += 1;
+					if (this.status > 3) {
+						this.status = 1;
+					}
+				}
+			}
+		});
+
+		var app2 = new Vue({
+			el : '#app2',
+			data : {
+				status : 1
+			},
+			methods : {
+				changeStatusValue : function() {
+					this.status += 1;
+					if (this.status > 3) {
+						this.status = 1;
+					}
+				}
+			}
+		});
+
+		var app3 = new Vue({
+			el : '#app3',
+			data : {
+				type : 'name'
+			},
+			methods : {
+				handleToggleClick : function() {
+					this.type = this.type === 'name' ? 'mail' : 'name';
+				}
+			}
+		});
+
+		var app3 = new Vue({
+			el : '#app4',
+			data : {
+				type : 'name'
+			},
+			methods : {
+				handleToggleClick : function() {
+					this.type = this.type === 'name' ? 'mail' : 'name';
+				}
+			}
+		});
+	</script>
+</body>
+</html>

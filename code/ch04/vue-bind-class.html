@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue示例: 绑定class的几种方式</title>
+</head>
+<body>
+	<div id="app1">
+		<div style="color: red">对象语法</div>
+		<div :class="{ 'active': isActive }">设置一个对象，可以动态切换class</div>
+		<div class="static" :class="{ 'active': isActive, 'error': isError }">对象也可以传入多个属性，来动态切换class。另外，:class可以与普通class共存。</div>
+		<div :class="classes">也可以使用data、computed和methods三种方法</div>
+		<button @click="app1.isActive = !app1.isActive">改变值(isActive)</button>
+		<button @click="app1.isError = !app1.isError">改变值(isError)</button>
+	</div>
+	<hr />
+	<div id="app2">
+		<div style="color: red">数组语法</div>
+		<div :class="[activeCls, errorCls]">当需要应用多个class时，可以使用数组语法</div>
+		<div :class="[isActive ? activeCls : '', errorCls]">也可以使用三元表达式来根据条件切换class</div>
+		<div :class="[{'active': isActive}, errorCls]">也可以在数组语法中使用对象语法</div>
+		<div :class="classes">也可以使用data、computed和methods三种方法</div>
+		<button @click="app2.isActive = !app2.isActive">改变值(isActive)</button>
+		<button @click="app2.disabled = !app2.disabled">改变值(disabled)</button>
+	</div>
+	<hr />
+	<div id="app3">
+		<div style="color: red">在组件上使用</div>
+		<my-component :class="{ 'active': isActive }"></my-component>
+	</div>
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		var app1 = new Vue({
+			el : '#app1',
+			data : {
+				isActive : true,
+				isError : false
+			},
+			computed : {
+				classes : function() {
+					return {
+						active : this.isActive && !this.isError,
+						'text-fail' : this.isError,
+						'text-ok' : !this.isError
+					}
+				}
+			}
+		});
+		
+		var app2 = new Vue({
+			el : '#app2',
+			data : {
+				isActive : true,
+				activeCls : 'active',
+				errorCls : 'error',
+				size : 'large',
+				disabled : true
+			},
+			computed : {
+				classes : function() {
+					return [
+						'btn',
+						{
+							['btn-' + this.size]: this.size !== '',
+							['btn-disabled']: this.disabled
+						}
+					]
+				}
+			}
+		});
+		
+		Vue.component('my-component', {
+			template: '<p class="article">一些文本</p>'
+		});
+		var app3 = new Vue({
+			el : '#app3',
+			data : {
+				isActive : true
+			}
+		});
+	</script>
+</body>
+</html>

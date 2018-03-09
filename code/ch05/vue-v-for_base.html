@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue内置指令示例: v-for</title>
+</head>
+<body>
+	<div style="color: red">基本用法</div>
+	<div id="app">
+		<ul>
+			<li v-for="book in books">{{ book.name }}</li>
+		</ul>
+		<div style="color: blue">列表渲染也支持用of来代替in作为分隔符，它更接近Javascript迭代器的语法。</div>
+		<ul>
+			<li v-for="book of books">{{ book.name }}</li>
+		</ul>
+	</div>
+	<hr />
+	<div style="color: red">v-for的表达式支持一个可选参数作为当前项的索引</div>
+	<div id="app2">
+		<ul>
+			<li v-for="(book, index) in books">{{ index + 1 }} - {{
+				book.name }}</li>
+		</ul>
+	</div>
+	<hr />
+	<div style="color: red">v-for也可以用在内置标签template上，将多个元素进行渲染</div>
+	<div id="app3">
+		<ul>
+			<template v-for="book in books">
+			<li>书名： {{ book.name }}</li>
+			<li>作者： {{ book.author }}</li>
+			</template>
+		</ul>
+	</div>
+	<hr />
+	<div style="color: red">除了数组外，对象的属性也是可以遍历的</div>
+	<div id="app4">
+		<span v-for="value in user">{{ value }}</span>
+	</div>
+	<hr />
+	<div style="color: red">遍历对象属性时，有两个可选参数，分别是键名和索引：</div>
+	<div id="app5">
+		<ul>
+			<li v-for="(value, key, index) in user">{{ index + 1 }} - {{ key
+				}}: {{ value }}</li>
+		</ul>
+	</div>
+	<hr />
+	<div style="color: red">v-for还可以迭代整数：</div>
+	<div id="app6">
+		<span v-for="n in 10">{{ n }}</span>
+	</div>
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		var app = new Vue({
+			el : '#app',
+			data : {
+				books : [ {
+					name : '《Vue.js实战》'
+				}, {
+					name : '《JavaScript语言精粹》'
+				}, {
+					name : '《JavaScript高级程序设计》'
+				} ]
+			}
+		});
+
+		var app2 = new Vue({
+			el : '#app2',
+			data : {
+				books : [ {
+					name : '《Vue.js实战》'
+				}, {
+					name : '《JavaScript语言精粹》'
+				}, {
+					name : '《JavaScript高级程序设计》'
+				} ]
+			}
+		});
+
+		var app3 = new Vue({
+			el : '#app3',
+			data : {
+				books : [ {
+					name : '《Vue.js实战》',
+					author : '梁'
+				}, {
+					name : '《JavaScript语言精粹》',
+					author : 'Douglas Crockford'
+				}, {
+					name : '《JavaScript高级程序设计》',
+					author : 'Nicholas C.Zakas'
+				} ]
+			}
+		});
+
+		var app4 = new Vue({
+			el : '#app4',
+			data : {
+				user : {
+					name : 'Aresn',
+					gender : '男',
+					age : 26
+				}
+			}
+		});
+
+		var app5 = new Vue({
+			el : '#app5',
+			data : {
+				user : {
+					name : 'Aresn',
+					gender : '男',
+					age : 26
+				}
+			}
+		});
+
+		var app6 = new Vue({
+			el : '#app6'
+		});
+	</script>
+</body>
+</html>

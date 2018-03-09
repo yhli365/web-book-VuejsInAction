@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue示例: v-on</title>
+</head>
+<body>
+	<div id="app">
+		<a v-if="show">这是一段文本</a>
+		<button v-on:click="handleClose">点击隐藏</button>
+		<hr />
+		<a v-if="show2">这是一段文本</a>
+		<button v-on:click="show2 = false">点击隐藏</button>
+		<hr />
+		<a v-if="show3">这是一段文本</a>
+		<button v-on:click="handleClose3">点击隐藏</button>
+		<hr />
+		<div style="color: red">v-on语法糖缩写(@)</div>
+		<a v-if="show4">这是一段文本</a>
+		<button @click="show4 = false">点击隐藏</button>
+	</div>
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		var app = new Vue({
+			el : '#app',
+			data : {
+				show : true,
+				show2 : true,
+				show3 : true,
+				show4 : true
+			},
+			methods : {
+				handleClose : function() {
+					this.show = false;
+				},
+				handleClose3 : function() {
+					this.close();
+				},
+				close : function() {
+					this.show3 = false;
+				},
+				init : function(text) {
+					console.log(text);
+				}
+			},
+			mounted : function() {
+				this.init('在初始化时调用');
+			}
+		});
+
+		app.init('通过外部调用'); // 在Vue实例外部调用
+	</script>
+</body>
+</html>
