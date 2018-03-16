@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue内置指令示例: 方法与事件</title>
+</head>
+<body>
+	<div style="color: red">计数器</div>
+	<div id="app">
+		点击次数：{{ counter }}
+		<button @click="handleAdd()">+ 1</button>
+		<button @click="handleAdd(10)">+ 10</button>
+	</div>
+	<hr />
+	<div style="color: red">阻止链接打开</div>
+	<div id="app2">
+		<a href="http://www.apple.com" @click="handleClick('禁止打开', $event)">打开链接</a>
+	</div>
+	<hr />
+	<div style="color: red">事件修饰符</div>
+	<div id="app3">
+		<div>
+			<a href="http://www.apple.com" @click.prevent>打开链接2</a>
+		</div>
+		<div>
+			<!-- 在表单元素上监听键盘事件：Shift + S -->
+			<input @keyup.shift.83="handleSave">
+		</div>
+	</div>
+
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		var app = new Vue({
+			el : '#app',
+			data : {
+				counter : 0
+			},
+			methods : {
+				handleAdd : function(count) {
+					count = count || 1;
+					this.counter += count;
+				}
+			}
+		});
+
+		var app2 = new Vue({
+			el : '#app2',
+			methods : {
+				handleClick : function(message, event) {
+					event.preventDefault();
+					window.alert(message);
+				}
+			}
+		});
+
+		var app3 = new Vue({
+			el : '#app3',
+			methods : {
+				handleSave : function(event) {
+					window.alert("event = " + event);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

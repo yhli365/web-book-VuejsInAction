@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue内置指令示例: v-for数组更新</title>
+</head>
+<body>
+	<div style="color: red">使用数组变异方法</div>
+	<div id="app">
+		<ul>
+			<li v-for="book in books">书名：{{ book.name }} ， 作者： {{
+				book.author }}</li>
+		</ul>
+		<button @click="handlePush">添加</button>
+	</div>
+	<hr />
+	<div style="color: red">使用数组非变异方法</div>
+	<div id="app2">
+		<ul>
+			<li v-for="book in books">书名：{{ book.name }} ， 作者： {{
+				book.author }}</li>
+		</ul>
+	</div>
+	<hr />
+	<div style="color: red">通过索引设置项和修改数组长度时触发视图更新</div>
+	<div id="app3">
+		<ul>
+			<li v-for="book in books">书名：{{ book.name }} ， 作者： {{
+				book.author }}</li>
+		</ul>
+		<button @click="handle3a">不触发更新</button>
+		<button @click="handle3b">触发更新</button>
+	</div>
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		var app = new Vue({
+			el : '#app',
+			data : {
+				books : [ {
+					name : '《Vue.js实战》',
+					author : '梁'
+				}, {
+					name : '《JavaScript语言精粹》',
+					author : 'Douglas Crockford'
+				}, {
+					name : '《JavaScript高级程序设计》',
+					author : 'Nicholas C.Zakas'
+				} ]
+			},
+			methods : {
+				handlePush : function() {
+					this.books.push({
+						name : '《CSS 揭秘》',
+						author : '[希] Lea Verou'
+					});
+				}
+			}
+		});
+
+		var app2 = new Vue({
+			el : '#app2',
+			data : {
+				books : [ {
+					name : '《Vue.js实战》',
+					author : '梁'
+				}, {
+					name : '《JavaScript语言精粹》',
+					author : 'Douglas Crockford'
+				}, {
+					name : '《JavaScript高级程序设计》',
+					author : 'Nicholas C.Zakas'
+				} ]
+			}
+		});
+
+		app2.books = app2.books.filter(function(item) {
+			return item.name.match(/JavaScript/);
+		});
+
+		var app3 = new Vue({
+			el : '#app3',
+			data : {
+				books : [ {
+					name : '《Vue.js实战》',
+					author : '梁'
+				}, {
+					name : '《JavaScript语言精粹》',
+					author : 'Douglas Crockford'
+				}, {
+					name : '《JavaScript高级程序设计》',
+					author : 'Nicholas C.Zakas'
+				} ]
+			},
+			methods : {
+				handle3a : function() {
+					// 不触发更新
+					this.books[1] = {
+						name : '《CSS 揭秘》',
+						author : '[希] Lea Verou'
+					};
+					this.books.length = 2;
+				},
+				handle3b : function() {
+					this.books.splice(0, 1, {
+						name : '《CSS 揭秘》',
+						author : '[希] Lea Verou'
+					});
+					this.books.splice(2);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

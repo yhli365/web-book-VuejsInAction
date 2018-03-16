@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表单与v-model: 基本用法</title>
+<style type="text/css">
+.content {
+	white-space: pre;
+	background: pink;
+	margin: 10px 0px;
+	padding: 5px 0px;
+}
+</style>
+</head>
+<body>
+	<div style="color: red">表单控件</div>
+	<div id="app">
+		<div style="color: blue">输入框input</div>
+		<p>输入的内容是：</p>
+		<div class="content">{{ message }}</div>
+		<input type="text" v-model="message" placeholder="输入...">
+		<hr />
+		<div style="color: blue">输入框@input</div>
+		<p>输入的内容是：</p>
+		<div class="content">{{ message2 }}</div>
+		<input type="text" @input="handleInput" placeholder="输入...">
+		<hr />
+		<div style="color: blue">文本域textarea</div>
+		<p>输入的内容是：</p>
+		<div class="content">{{ text }}</div>
+		<textarea v-model="text" placeholder="输入..." rows="3" cols="100"></textarea>
+		<hr />
+		<div style="color: blue">单选按钮单独使用</div>
+		<p>选择的项是：</p>
+		<div class="content">{{ picked }}</div>
+		<input type="radio" :checked="picked">
+		<div style="color: blue">单选按钮组合使用来实现互斥选择的效果，就需要v-model配合value来使用：</div>
+		<p>选择的项是：</p>
+		<div class="content">{{ picked2 }}</div>
+		<input type="radio" v-model="picked2" value="html" id="html">
+		<label for="html">HTML</label> <br /> <input type="radio"
+			v-model="picked2" value="js" id="js"> <label for="js">JavaScript</label>
+		<br /> <input type="radio" v-model="picked2" value="css" id="css">
+		<label for="css">CSS</label> <br />
+		<hr />
+		<div style="color: blue">单选列表</div>
+		<p>选择的项是：</p>
+		<div class="content">{{ selected }}</div>
+		<select v-model="selected">
+			<option>html</option>
+			<option value="js">JavaScript</option>
+			<option>css</option>
+		</select>
+		<hr />
+		<div style="color: blue">多选列表</div>
+		<p>选择的项是：</p>
+		<div class="content">{{ selected2 }}</div>
+		<select v-model="selected2" multiple>
+			<option>html</option>
+			<option value="js">JavaScript</option>
+			<option>css</option>
+		</select>
+		<hr />
+		<div style="color: blue">单选列表:v-for</div>
+		<p>选择的项是：</p>
+		<div class="content">{{ selected3 }}</div>
+		<select v-model="selected3">
+			<option v-for="option in options" :value="option.value">{{
+				option.text }}</option>
+		</select>
+	</div>
+
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		var app = new Vue({
+			el : '#app',
+			data : {
+				message : '',
+				text : '',
+				picked : true,
+				picked2 : 'js',
+				selected : 'html',
+				selected2 : [ 'html', 'js' ],
+				selected3 : 'html',
+				options : [ {
+					text : 'HTML',
+					value : 'html'
+				}, {
+					text : 'JavaScript',
+					value : 'js'
+				}, {
+					text : 'CSS',
+					value : 'css'
+				} ],
+				message2 : ''
+			},
+			methods : {
+				handleInput : function(e) {
+					this.message2 = e.target.value;
+				}
+			}
+		});
+	</script>
+</body>
+</html>

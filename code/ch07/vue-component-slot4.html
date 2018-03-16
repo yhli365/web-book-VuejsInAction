@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>组件详解: 使用slot分发内容</title>
+</head>
+<body>
+	<div style="color: red">作用域插槽：template内可以通过临时变量props访问来自子组件插槽的数据msg。</div>
+	<div id="app">
+		<child-component> <template scope="props">
+		<p>来自父组件的内容</p>
+		<p>{{ props.msg }}</p>
+		</template> </child-component>
+	</div>
+	<hr />
+
+	<div style="color: red">作用域插槽：更具代表性的用例是列表组件，允许组件自定义应该如何渲染列表每一项。</div>
+	<div id="app2">
+		<my-list :books="books"> <!-- 作用域插槽也可以是具名的Slot --> <template
+			slot="book" scope="props">
+		<li>{{ props.bookName }}</li>
+		</template> </my-list>
+	</div>
+	<hr />
+
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		// -------------------------------app1
+		Vue
+				.component(
+						'child-component',
+						{
+							template : '\
+			<div class="container">\
+				<slot msg="来自子组件的内容"></slot>\
+			</div>'
+						});
+		var app = new Vue({
+			el : '#app'
+		});
+		
+		// -------------------------------app2
+		Vue
+				.component(
+						'my-list',
+						{
+							props:{
+								books: {
+									type: Array,
+									default: function(){
+										return [];
+									}
+								}
+							},
+							template : '\
+			<ul>\
+				<slot name="book"\
+				v-for="book in books"\
+				:book-name="book.name">\
+				<!--这里也可以写默认slot内容 -->\
+				</slot>\
+			</ul>'
+						});
+		var app2 = new Vue({
+			el : '#app2',
+			data:{
+				books:[
+					{ name: '《Vue.js实战》'},
+					{ name: '《JavaScript语言精粹》'},
+					{ name: '《JavaScript高级程序设计》'}
+				]
+			}
+		});
+	</script>
+</body>
+</html>
