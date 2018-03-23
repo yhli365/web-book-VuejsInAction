@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>组件详解: 其他</title>
+</head>
+<body>
+	<div style="color: red">手动挂载实例</div>
+	<div id="mount-div"></div>
+	<hr />
+
+	<div style="color: red">写法2</div>
+	<div id="mount-div2"></div>
+	<hr />
+
+	<div style="color: red">写法3</div>
+	<div id="mount-div3"></div>
+	<hr />
+
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		// -------------------------------app1
+		var MyComponent = Vue.extend({
+			template : '<div>Hello, {{ name }}</div>',
+			data : function() {
+				return {
+					name : 'Aresn'
+				}
+			}
+		});
+
+		new MyComponent().$mount('#mount-div');
+
+		// 以下两种写法也是可以的
+
+		// 同上
+		new MyComponent({
+			el : '#mount-div2'
+		});
+
+		//或者，在文档之外渲染并且随后挂载
+		var component = new MyComponent().$mount();
+		document.getElementById('mount-div3').appendChild(component.$el);
+	</script>
+</body>
+</html>

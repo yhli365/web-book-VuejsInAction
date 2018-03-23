@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>自定义指令: 基本用法</title>
+</head>
+<body>
+	<div style="color: red">多个值</div>
+	<div id="app">
+		<div v-test="{msg: 'hello', name: 'Aresn'}"></div>
+	</div>
+	<hr />
+
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		// -------------------------------app1
+		Vue.directive('test', {
+			bind : function(el, binding, vnode) {
+				var s = JSON.stringify;
+				el.innerHTML = //
+				'msg: ' + s(binding.value.msg) + '<br>' + //
+				'name: ' + s(binding.value.name) + '<br>' //
+			}
+		});
+
+		var app = new Vue({
+			el : '#app'
+		});
+	</script>
+</body>
+</html>
