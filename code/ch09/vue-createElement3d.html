@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Render函数: createElement用法</title>
+</head>
+<body>
+	<div style="color: red">使用JavaScript代替模板功能: v-model</div>
+	<div id="app">
+		<ele></ele>
+	</div>
+
+	<hr />
+	<div style="color: red">对应的template写法</div>
+	<div id="app2">
+		<input v-model="value">
+		<p>value: {{ value }}</p>
+	</div>
+
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		// -------------------------------app1
+		Vue.component('ele', {
+			render : function(createElement) {
+				var _this = this;
+				return createElement('div', [ createElement('input', {
+					domProps : {
+						value : this.value
+					},
+					on : {
+						input : function(event) {
+							_this.value = event.target.value;
+						}
+					}
+				}), createElement('p', 'value: ' + this.value) ]);
+			},
+			data : function() {
+				return {
+					value : ''
+				}
+			}
+		});
+
+		var app = new Vue({
+			el : '#app'
+		});
+
+		// -------------------------------app2
+		var app2 = new Vue({
+			el : '#app2',
+			data : {
+				value : '2'
+			}
+		});
+	</script>
+</body>
+</html>

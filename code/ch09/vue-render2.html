@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Render函数: 什么是Render函数</title>
+</head>
+<body>
+	<div id="app">
+		<anchor :level="2" title="特性">特性</anchor>
+	</div>
+
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script>
+		// -------------------------------app1
+		Vue.component('anchor', {
+			props : {
+				level : {
+					type : Number,
+					required : true
+				},
+				title : {
+					type : String,
+					default : ''
+				}
+			},
+			render : function (createElement) {
+				return createElement('h' + this.level, [
+					createElement('a', {
+						domProps: {
+							href: '#' + this.title
+						}
+					},
+					this.$slots.default
+					)
+				]);
+			}
+		});
+
+		var app = new Vue({
+			el : '#app'
+		});
+	</script>
+</body>
+</html>
